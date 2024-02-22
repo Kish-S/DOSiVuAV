@@ -64,6 +64,6 @@ for path in glob.glob('undistorted/*.jpg'):
     # Save the image
     img_name = os.path.basename(path)
     cv2.imwrite(f'thresholded/{img_name}', combined_thresh)
-cv2.destroyAllWindows()
+
 
 

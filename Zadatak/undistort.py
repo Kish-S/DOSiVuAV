@@ -10,7 +10,7 @@ dist = calibratio['dist']
 rvecs = calibratio['rvecs']
 tvecs = calibratio['tvecs']
 i = 0
-for path in glob.glob('camera_cal/*.jpg'):
+for path in glob.glob('test_images/*.jpg'):
     
     img = cv2.imread(path)
     h, w = img.shape[:2]
@@ -24,5 +24,5 @@ for path in glob.glob('camera_cal/*.jpg'):
     croppedImg = undistortedImg[y:y+h, x:x+w]
     img_name = os.path.basename(path)
     
-    cv2.imwrite(f'undistorted_chess/{img_name}', croppedImg)
+    cv2.imwrite(f'undistorted/{img_name}', croppedImg)
 cv2.destroyAllWindows()

@@ -8,6 +8,8 @@ import os
 ym_per_pix = 30/720  # meters per pixel in y dimension
 xm_per_pix = 3.7/700  # meters per pixel in x dimension
 
+
+
 def find_lane_pixels(binary_warped):
     # Take a histogram of the bottom half of the image
     histogram = np.sum(binary_warped[binary_warped.shape[0] // 2:, :], axis=0)
@@ -131,6 +133,12 @@ def warp_lane_boundaries(undistorted, binary_warped, left_fitx, right_fitx, plot
     warp_zero = np.zeros_like(binary_warped).astype(np.uint8)
     color_warp = np.dstack((warp_zero, warp_zero, warp_zero))
 
+    h_ROI_factor = 13/20
+    w_top_left_ROI_factor = 9.5/20
+    w_top_right_ROI_factor = 5.5/10
+    w_bot_right_ROI_factor = 8/10
+    w_bot_left_ROI_factor = 3/12
+
     # Recast x and y points into usable format for cv2.fillPoly()
     pts_left = np.array([np.transpose(np.vstack([left_fitx, ploty]))])
     pts_right = np.array([np.flipud(np.transpose(np.vstack([right_fitx, ploty])))])
@@ -140,11 +148,11 @@ def warp_lane_boundaries(undistorted, binary_warped, left_fitx, right_fitx, plot
     cv2.fillPoly(color_warp, np.int_([pts]), (0, 255, 0))
 
     img_size = (undistorted.shape[1], undistorted.shape[0])
-    src = np.float32(
-    [[(img_size[0] / 2) - 55, img_size[1] / 2 + 100],
-    [((img_size[0] / 6) - 10), img_size[1]],
-    [(img_size[0] * 5 / 6) + 60, img_size[1]],
-    [(img_size[0] / 2 + 55), img_size[1] / 2 + 100]])
+    src = np.float32( 
+    [[(img_size[0] * w_top_left_ROI_factor), img_size[1] * h_ROI_factor],
+    [(img_size[0] * w_bot_left_ROI_factor), img_size[1]],
+    [(img_size[0] * w_bot_right_ROI_factor), img_size[1]],
+    [(img_size[0] * w_top_right_ROI_factor), img_size[1] * h_ROI_factor ]])
     dst = np.float32(
     [[(img_size[0] / 4), 0],
     [(img_size[0] / 4), img_size[1]],

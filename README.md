@@ -140,7 +140,7 @@ The resulting image of lane detection can be seen here:
  
 In order to smooth out parts of the video where there are no lines detected(weak color, in shadow, badly drawn) history buffer of left and right fits was introduced. In the case when there are no lines detected on the current frame either on left or on right side, average of last 10 frame lines are taken and that line is used as lane-line. Additionally, deviation from average of last 10 lines was calculated and if it is too high (it is not a road curve, but noise induced jitter), average of last 10 lines is taken as well.
  
-Here's a [link to my video result](./project_video.mp4)
+Here's a [link to my video result](https://www.youtube.com/watch?v=4Sa_WUMbAyQ)
  
 ---
  
